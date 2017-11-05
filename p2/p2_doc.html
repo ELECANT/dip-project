@@ -1,0 +1,407 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>html {
+  font-size: 100%;
+  overflow-y: scroll;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+body {
+  color: #444;
+  font-family: Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+  font-size: 12px;
+  line-height: 1.5em;
+  padding: 1em;
+  margin: auto;
+  max-width: 42em;
+  background: #fefefe;
+}
+
+a {
+  color: #0645ad;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #0b0080;
+}
+
+a:hover {
+  color: #06e;
+}
+
+a:active {
+  color: #faa700;
+}
+
+a:focus {
+  outline: thin dotted;
+}
+
+a:hover,
+a:active {
+  outline: 0;
+}
+
+::-moz-selection {
+  background: rgba(255, 255, 0, 0.3);
+  color: #000;
+}
+
+::selection {
+  background: rgba(255, 255, 0, 0.3);
+  color: #000;
+}
+
+a::-moz-selection {
+  background: rgba(255, 255, 0, 0.3);
+  color: #0645ad;
+}
+
+a::selection {
+  background: rgba(255, 255, 0, 0.3);
+  color: #0645ad;
+}
+
+p {
+  margin: 1em 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+  color: #111;
+  line-height: 1em;
+}
+
+h4,
+h5,
+h6 {
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 2.5em;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+h3 {
+  font-size: 1.5em;
+}
+
+h4 {
+  font-size: 1.2em;
+}
+
+h5 {
+  font-size: 1em;
+}
+
+h6 {
+  font-size: 0.9em;
+}
+
+blockquote {
+  color: #666666;
+  margin: 0;
+  padding-left: 3em;
+  border-left: 0.5em #eee solid;
+}
+
+hr {
+  display: block;
+  border: 0;
+  border-top: 1px solid #aaa;
+  border-bottom: 1px solid #eee;
+  margin: 1em 0;
+  padding: 0;
+}
+
+pre,
+code,
+kbd,
+samp {
+  color: #000;
+  font-family: monospace, monospace;
+  _font-family: 'courier new', monospace;
+  font-size: 0.98em;
+}
+
+pre {
+  white-space: pre;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+b,
+strong {
+  font-weight: bold;
+}
+
+dfn {
+  font-style: italic;
+}
+
+ins {
+  background: #ff9;
+  color: #000;
+  text-decoration: none;
+}
+
+mark {
+  background: #ff0;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+ul,
+ol {
+  margin: 1em 0;
+  padding: 0 0 0 2em;
+}
+
+li p:last-child {
+  margin: 0;
+}
+
+dd {
+  margin: 0 0 0 2em;
+}
+
+img {
+  border: 0;
+  -ms-interpolation-mode: bicubic;
+  vertical-align: middle;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td {
+  vertical-align: top;
+}
+
+@media only screen and (min-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  body {
+    font-size: 16px;
+  }
+}
+
+@media print {
+  * {
+    background: transparent !important;
+    color: black !important;
+    filter: none !important;
+    -ms-filter: none !important;
+  }
+
+  body {
+    font-size: 12pt;
+    max-width: 100%;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+
+  hr {
+    height: 1px;
+    border: 0;
+    border-bottom: 1px solid black;
+  }
+
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  .ir a:after,
+  a[href^="javascript:"]:after,
+  a[href^="#"]:after {
+    content: "";
+  }
+
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    padding-right: 1em;
+    page-break-inside: avoid;
+  }
+
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+
+  img {
+    max-width: 100% !important;
+  }
+
+  @page :left {
+    margin: 15mm 20mm 15mm 10mm;
+  }
+
+  @page :right {
+    margin: 15mm 10mm 15mm 20mm;
+  }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+}</style><style>/*github*/
+.codehilite {background-color:#fff;color:#333333;}
+.codehilite .hll {background-color:#ffffcc;}
+.codehilite .c{color:#999988;font-style:italic}
+.codehilite .err{color:#a61717;background-color:#e3d2d2}
+.codehilite .k{font-weight:bold}
+.codehilite .o{font-weight:bold}
+.codehilite .cm{color:#999988;font-style:italic}
+.codehilite .cp{color:#999999;font-weight:bold}
+.codehilite .c1{color:#999988;font-style:italic}
+.codehilite .cs{color:#999999;font-weight:bold;font-style:italic}
+.codehilite .gd{color:#000000;background-color:#ffdddd}
+.codehilite .ge{font-style:italic}
+.codehilite .gr{color:#aa0000}
+.codehilite .gh{color:#999999}
+.codehilite .gi{color:#000000;background-color:#ddffdd}
+.codehilite .go{color:#888888}
+.codehilite .gp{color:#555555}
+.codehilite .gs{font-weight:bold}
+.codehilite .gu{color:#800080;font-weight:bold}
+.codehilite .gt{color:#aa0000}
+.codehilite .kc{font-weight:bold}
+.codehilite .kd{font-weight:bold}
+.codehilite .kn{font-weight:bold}
+.codehilite .kp{font-weight:bold}
+.codehilite .kr{font-weight:bold}
+.codehilite .kt{color:#445588;font-weight:bold}
+.codehilite .m{color:#009999}
+.codehilite .s{color:#dd1144}
+.codehilite .n{color:#333333}
+.codehilite .na{color:teal}
+.codehilite .nb{color:#0086b3}
+.codehilite .nc{color:#445588;font-weight:bold}
+.codehilite .no{color:teal}
+.codehilite .ni{color:purple}
+.codehilite .ne{color:#990000;font-weight:bold}
+.codehilite .nf{color:#990000;font-weight:bold}
+.codehilite .nn{color:#555555}
+.codehilite .nt{color:navy}
+.codehilite .nv{color:teal}
+.codehilite .ow{font-weight:bold}
+.codehilite .w{color:#bbbbbb}
+.codehilite .mf{color:#009999}
+.codehilite .mh{color:#009999}
+.codehilite .mi{color:#009999}
+.codehilite .mo{color:#009999}
+.codehilite .sb{color:#dd1144}
+.codehilite .sc{color:#dd1144}
+.codehilite .sd{color:#dd1144}
+.codehilite .s2{color:#dd1144}
+.codehilite .se{color:#dd1144}
+.codehilite .sh{color:#dd1144}
+.codehilite .si{color:#dd1144}
+.codehilite .sx{color:#dd1144}
+.codehilite .sr{color:#009926}
+.codehilite .s1{color:#dd1144}
+.codehilite .ss{color:#990073}
+.codehilite .bp{color:#999999}
+.codehilite .vc{color:teal}
+.codehilite .vg{color:teal}
+.codehilite .vi{color:teal}
+.codehilite .il{color:#009999}
+.codehilite .gc{color:#999;background-color:#EAF2F5}
+</style><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+MathJax.Hub.Config({
+  config: ["MMLorHTML.js"],
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX"],
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+    processEscapes: false
+  },
+  TeX: {
+    extensions: ["AMSmath.js", "AMSsymbols.js"],
+    TagSide: "right",
+    TagIndent: ".8em",
+    MultLineWidth: "85%",
+    equationNumbers: {
+      autoNumber: "AMS",
+    },
+    unicode: {
+      fonts: "STIXGeneral,'Arial Unicode MS'"
+    }
+  },
+  showProcessingMessages: false
+});
+</script>
+<title>p2_doc</title></head><body><article class="markdown-body"><h1 id="project-2"><a name="user-content-project-2" href="#project-2" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Project 2</h1>
+<h2 id="task"><a name="user-content-task" href="#task" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Task</h2>
+<p>(a) original image -&gt; (b) laplacian [to show the image, need rearrange the pix] -&gt; (c)sharpen by adding laplacian <br />
+(a) original image -&gt; (d) sobel gradient -&gt; (e) smoothed by 5x5 average filter -&gt; (f) = (c)*(e)<br />
+(g) = (a) + (f) -&gt; (h) power law on (g)</p>
+<h2 id="implementation"><a name="user-content-implementation" href="#implementation" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Implementation</h2>
+<p><strong>(b)</strong> Using Laplacian on (a)<br />
+Laplacian for function $f(x,y)$: $\Delta^2f=\frac{\partial^2 f}{\partial x^2} + \frac{\partial^2 f}{\partial y^2}$<br />
+Along x: $\frac{\partial^2 f}{\partial x^2}=[f(x+1, y)-f(x,y)]-[f(x,y)-f(x-1,y)]$<br />
+Along y: $\frac{\partial^2 f}{\partial y^2}=[f(x, y+1)-f(x,y)]-[f(x,y)-f(x,y-1)]$<br />
+Diagonal: $\frac{\partial^2 f}{\partial x^2}=[f(x+1, y+1)-f(x,y)]-[f(x,y)-f(x-1,y-1)]$<br />
+Diagonal: $\frac{\partial^2 f}{\partial y^2}=[f(x-1, y+1)-f(x,y)]-[f(x,y)-f(x+1,y-1)]$</p>
+<p>$\nabla ^2f=f(x+1, y)+f(x-1, y)+f(x,y+1)+f(x,y-1)+f(x+1,y+1)+f(x-1,y-1)+f(x+1,y-1)+f(x-1,y+1)-8f(x,y)$</p>
+<p><strong>Details</strong> <br />
+Padding. I use duplication for padding.<br />
+To visualize (b), we need to scale the result of Laplacian. The scale method used here is:<br />
+$f_m=f-\min (f)$, f_s=K[f_m/ \max (f_m)]</p>
+<p><strong>(c)</strong> Add $\Delta^2 f$ to (a)<br />
+The way to use Laplacian for sharpening is $g(x,y)=f(x,y)+c\Delta^2 f$. $c$ is determined by the mask we use. Here $c=1$.</p>
+<p><strong>(d)</strong> Using First-Order Gradient (Sobel) on (a)<br />
+$\nabla f \equiv \left[ \frac{\partial f}{\partial x}, \frac{\partial f}{\partial y} \right] ^T $</p></article></body></html>
