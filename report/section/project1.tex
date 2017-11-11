@@ -1,0 +1,11 @@
+\section{Project 1}
+\subsection{Project Proposal}
+This project implement histogram equalization. First, count the histogram graph an image, then implement histogram equalization.
+\subsection{Method}
+Let $r$ denote the intensity of a pixel in an image and $r \in [0,L-1]$. We consider a transformation \begin{equation}s=T(r) ~~~~ 0 \leq r \leq L-1 \end{equation} that produce an output intensity level $s$ for every pixel in the input image having intensity $r$. We assume that:
+\\ \textbf{(a)} $T(r)$ is a monotonically increasing function in the interval $0 \leq r \leq L-1$; and \\
+\textbf{(b)} $0 \leq T(r) \leq L-1$ for $r \in [0, L-1]$.
+Condition \textbf{(a)} and \textbf{(b)} guarantee the existing of inverse function $r=T^{-1}(s)$ which is monotonically increasing. 
+
+
+

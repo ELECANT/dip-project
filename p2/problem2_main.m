@@ -14,7 +14,7 @@ fprintf('Display the image b (scaled Laplacian) %d\n', oo);
 figure, imshow(b);
 
 % get image c : add laplacian for sharpening   
-cc = double(a) + lap;
+cc = double(a) + lap_a;
 c = scale255(cc);
 oo=oo+1;
 fprintf('Display the image c ((a) after Laplacian sharpening) %d\n', oo);
