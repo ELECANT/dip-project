@@ -1,9 +1,11 @@
 /gui
 
-.aux
+*.aux
 
-.log
+*.log
 
-.synctex.gz
+*.synctex.gz
 
-.toc
+*.toc
+
+*.html
