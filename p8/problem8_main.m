@@ -1,10 +1,11 @@
 % DIP problem 8
 % Morphological reconstruction
 % 3 Tasks part in main
-% Dependent function: TODO
+% author: wang.yiqing
+% Dependent function: erosion, dilatoin, opening_reconstruction,
+%                     dilation_reconstruction
 
 %=========================================================================
-
 
 % read in the image a : the original image
 fp = 'Fig0929(a).tif';

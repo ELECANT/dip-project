@@ -1,43 +1,33 @@
-fp = input('Input the image path: ', 's');
-f = imread(fp);
-fprintf('----------------------\n');
-fprintf('Display the image %s\n', fp);
-imshow(f);
+% DIP problem 1
+% Histogram euqlization
+% author: wang.yiqing
+% Dependent function: histShow, histEqual
 
-fprintf('Display the histogram graph\n');
-figure, imhist(f);
+% =========================================================================
+fp1 = 'Fig1.jpg';
+fp2 = 'Fig2.jpg';
+f1 = imread(fp1);
+f2 = imread(fp2);
+% =======================================================================
+% process Fig1.jpg
+figure, imshow(f1);
+[fx1, fy1] = histShow(f1);
+figure, bar(fx1, fy1);
+g1 = histEqual(f1);
+figure, imshow(g1);
+[gx1, gy1] = histShow(g1);
+figure, bar(gx1, gy1);
 
-fprintf('Display the equlized graph of using default histeq\n');
-newf = histeq(f);
-figure, imshow(newf);
+% process Fig2.jpg
+figure, imshow(f2);
+[fx2, fy2] = histShow(f2);
+figure, bar(fx2, fy2);
+g2 = histEqual(f2);
+figure, imshow(g2);
+[gx2, gy2] = histShow(g2);
+figure, bar(gx2, gy2);
 
-fprintf('Display the equlized histogram\n');
-figure, imhist(newf);
+% =======================================================================
+imwrite(g1, 'g1.png');
+imwrite(g2, 'g2.png');
 
-fprintf('Using self-defined function to process\n');
-
-fprintf('Self-defined histogram function\n');
-g = f(:)';
-n = length(g);
-x = (1 : 256);
-y = zeros(1, 256);
-for i = (1 : n)
-    y(g(i)) = y(g(i)) + 1;
-end
-figure, bar(x, y);
-
-fprintf('Self-defined histogram equalization\n');
-T = zeros(1, 256);
-a = 0;
-for i = (1 : 256)
-    T(i) = a + y(i);
-    a = T(i);
-end
-T = round(255 * T / n);
-for i = (1 : n)
-    g(i) = T(g(i)+1);
-end
-newf2 = reshape(g, size(f));
-figure, imshow(newf2);
-
-figure, imhist(newf2);

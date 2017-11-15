@@ -1,3 +1,49 @@
-\section{project 3}
-\subsection{proposal}
-This is project 3 
+\section{Project 3 - Filtering in Frequency Domain}
+
+\subsection{Project Proposal}
+Implement the ideal, Butterworth and Gaussian lowpass and highpass filters and the results under different parameters using the image character\_test\_pattern.tif
+
+\subsection{Preliminaries}
+\subsubsection{Summary of Fourier transform properties}
+
+\begin{table}[h]
+	\caption{Summary of useful formulas.}
+	\centering
+	\begin{tabular}{|l|m{0.6\columnwidth}|}\hline
+		Name & Expression(s) \\ \hline
+		1D FT & \begin{equation}F(u)=\int_{-\infty}^\infty f(t)e^{-j2 \pi ut}dt \end{equation} \\ 
+		1D IFT & \begin{equation}f(t)=\int_{-\infty}^\infty F(u)e^{j2 \pi ut}du\end{equation} \\
+		1D DFT & \begin{equation}F(u)=\sum_{t=0}^{M-1}f(t)e^{-j2\pi ut/M} \end{equation} \\
+		1D IDFT & \begin{equation}f(t)=\frac{1}{M}\sum_{u=0}^{M-1}F(u)e^{j2\pi ut/M}\end{equation} \\
+		2D FT & \begin{equation} F(u,v)=\int_{-\infty}^\infty \int_{-\infty}^\infty f(x,y)e^{-j2 \pi (ux+vy)}dxdy \end{equation} \\
+		2D DFT & \begin{equation} F(u,v)= \sum_{x=0}^{M-1}\sum_{y=0}^{N-1} f(x,y)e^{-j2\pi (ux/M+vy/N)}\end{equation} \\
+		2D IDFT & \begin{equation} f(x,y) = \frac{1}{MN}\sum_{u=0}^{M-1}\sum_{v=0}^{N-1]}F(u,v)e^{j2\pi(ux/M+vy/N)} \end{equation} \\
+		Power spectrum & \begin{equation} P(u,v)=|F(u,v)|^2 \end{equation} \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsubsection{Steps for filtering in the frequency domain}
+\begin{enumerate}
+	\item Given an input image $f(x,y)$ of size $M\times N$, obtain the padding parameters $P=2M$ and $Q=2N$.Form a padded image, $f_p(x,y)$, of size $P\times Q$ by appending zeros.
+	\item Multiply $f_p(x,y)$ by $(-1)^{x+y}$ to center its transform.
+	\item Compute the DFT, $F(u,v)$ of the image from centered padded image.
+	\item Generate a real, symmetric filter function $H(u,v)$ of size $P \times Q$ with center at coordinates $(P/2, Q/2)$. Form the product $G(u,v)=H(u,v)F(u,v)$.
+	\item Obtain the precessed image: $g_p(x,y)=\left\{ \text{real}\left[\ \mathcal{F}^{-1}[G(u,v)] \right] \right\}(-1)^{x+y}$ where the real part is selected in order to ignore parasitic complex components resulting from computational inaccuracies.
+	\item Obtain the final processed result, $g(x,y)$, by extracting the top left $M\times N$ quadrant of $g_p(x,y)$
+\end{enumerate}
+
+
+\subsection{Image Smoothing Using Frequency Domain Filters}
+Edges and other sharp intensity transitions such as noise in an image contribute significantly to the high-frequency content of its Fourier transform. Hence, smoothing is achieved in the frequency domain by high-frequency attenuation.
+\subsubsection{Ideal lowpass filters}
+\emph{Ideal lowpass filters (ILPF)} is very sharp as it is specified by the function 
+\begin{equation}
+H(u,v) = \left \{ \begin{array}{rcl}
+1 & \text{if $D(u,v)\leq D_0$} \\
+0 & \text{otherwise}
+\end{array} \right.
+\end{equation}
+where $D_0$ is a positive constant and $D(u,v)$ is the distance between  $(u,v)$ in frequency domain and the center of the frequency rectangle; that is \begin{equation} D(u,v) = \left[ (u-P/2)^2+(v-Q/2)^2 \right]^{1/2} \end{equation} 
+One way to establish a set of standard cutoff frequency loci is to compute circles that enclose specified amounts of total image power $P_T$. \begin{equation} P_T=\sum_{u=0}^{P-1}\sum_{v=0}^{Q-1}P(u,v) \end{equation}
+The percentage of power enclosed by the circle of radius $D_0$ with origin at the center of the frequency rectangle is \begin{equation} \alpha=100\left[\ \sum_u\sum_vP(u,v)/P_T \right] ~~~~ \text{(u,v) is inside the circle}\end{equation}
