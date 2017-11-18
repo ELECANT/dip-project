@@ -1,4 +1,4 @@
-function [ scale_imgg, imgg, oo] = b_laplacian_scale( imgf,oo)
+function [ scale_imgg, imgg] = b_laplacian_scale( imgf )
 %B_LAPLACIAN_SCALE 
 
 [M, N] = size(imgf);

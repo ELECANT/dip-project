@@ -1,53 +1,52 @@
+% DIP problem 2
+% Spatial Enhancement Methods
+% author: wang.yiqing
+% Dependent function: scale255, relicate_padding, 5x5_average,
+% sobel, laplacian_scale
+
+% ========================================================================
+
 % image should be skeleton_orig
-oo=0;
 % read in the image a : the original image
-fp = input('Input the image path: ', 's');
+fp = 'skeleton_orig.tif';
 a = imread(fp, 1);
-oo=oo+1;
-fprintf('Display the image a %d\n', oo);
 imshow(a);
+imwrite(a, '2-a.png');
 
 % get image b : conduct laplacian and scaling
-[b, lap_a, oo] = b_laplacian_scale(a, oo);
-oo=oo+1;
-fprintf('Display the image b (scaled Laplacian) %d\n', oo);
+[b, lap_a] = b_laplacian_scale(a);
 figure, imshow(b);
+imwrite(b, '2-b.png');
 
 % get image c : add laplacian for sharpening   
 cc = double(a) + lap_a;
 c = scale255(cc);
-oo=oo+1;
-fprintf('Display the image c ((a) after Laplacian sharpening) %d\n', oo);
 figure, imshow(c);
+imwrite(c, '2-c.png');
 
 % get image d : apply Sobel on a
 d = d_sobel(a);
-oo=oo+1;
-fprintf('Display the image d ((a) after Sobel and scale) %d\n', oo);
 figure, imshow(d);
+imwrite(d, '2-d.png');
 
 % get image e : apply 5x5 average filter on d
 e = e_5x5_average(d);
-oo=oo+1;
-fprintf('Display the image e ((d) after Sobel and scale) %d\n', oo);
 figure, imshow(e);
+imwrite(e, '2-e.png');
 
 % get image f : f = c*e
 % note that trans to double to avoid truncation
 f = scale255(double(c) .* double(e));
-oo=oo+1;
-fprintf('Display the image f (f = c*e) %d\n', oo);
 figure, imshow(f);
+imwrite(f, '2-f.png');
 
 % get image g : g = a + f
 % note that trans to double to avoid truncation
 g = scale255(double(a) + double(f));
-oo=oo+1;
-fprintf('Display the image g (g = a+f) %d\n', oo);
 figure, imshow(g);
+imwrite(g, '2-g.png');
 
 % get image h : h = c*g^gamma, c=1.0, gamma=0.5
 h = scale255(double(g) .^ 0.5);
-oo=oo+1;
-fprintf('Display the image h (h = g^0.5) %d\n', oo);
 figure, imshow(h);
+imwrite(h, '2-h.png');

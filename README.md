@@ -8,7 +8,7 @@ simple matlab implementation of some digital image topics
 
 1. histogram equalization  
 2. spatial enhancement method  
-	- replicate padding, scale, mean , Laplacian, Sobel   
+	- replicate padding, scale, mean, Laplacian, Sobel   
 3. TODO   
 4. noise generation and reduction   
 	- noise generation: uniform, Gaussian, Rayleigh, Gamma, Exponential, pepper&salt   
