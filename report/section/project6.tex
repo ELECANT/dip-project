@@ -1,2 +1,150 @@
 \section{Project 6 - Geometric Transformation}
+
 \subsection{Project Proposal}
+Implement 4 geometric transform functions - rotate by a specified angle, translate by a given vector, scale by a given rate using nearest neighbor and scale by a given rate using bilinear interpolation.
+
+\subsection{Preliminary}
+\subsubsection{Spatial Transform}
+A spatial transformation of an image is a geometric transformation of the image coordinate system. In a spatial transformation each point $(x,y)$ of origin image $A$ is mapped to point $(u,v)=(f_1(x,y), f_2(x,y))$ in a new coordinate system. \\
+Affine transformation is any transformation that preserve collinearity and ratios of distances. Rotations, translations, magnifications, shears and their combinations are all affine transformations. Any single affine operation can be expressed as 
+\begin{equation} \begin{bmatrix} u\\v\\1 \end{bmatrix} = 
+\begin{bmatrix} c_{11} & c_{12} & c_{13} \\
+c_{21} & c_{22} & c_{23} \\
+0 & 0 & 1 \end{bmatrix} \begin{bmatrix}
+x\\y\\1 \end{bmatrix} \end{equation}
+We extend the 2D point to 3D in order to use a homogeneous matrix multiplication notation. Then we can represent translation, rotation, scaling under this notation. We denote the $3\times 3$ transformation matrix as $T$
+\begin{equation} T= \begin{bmatrix} 1&0&x_0 \\ 0&1&y_0 \\ 0&0&1 \end{bmatrix} \text{Translation by }(x_0, y_0) \end{equation}
+\begin{equation} T= \begin{bmatrix} s_1&0&0 \\ 0&s_2&0 \\ 0&0&1 \end{bmatrix} \text{Scale by $s_1$ and $s_2$} \end{equation}
+\begin{equation} T= \begin{bmatrix} \cos \theta & \sin \theta & 0 \\ -\sin \theta & \cos \theta & 0 \\ 0&0&1 \end{bmatrix} \text{Rotate by $\theta$ (counter-clock)} \end{equation}
+\begin{equation} T= \begin{bmatrix} 1&\alpha&0 \\ 0&1&0 \\ 0&0&1 \end{bmatrix} \text{Horizontal shearing by }\alpha \end{equation}
+\begin{equation} T= \begin{bmatrix} 1&0&0 \\ \beta&1&0 \\ 0&0&1 \end{bmatrix} \text{Vertical shearing by }\beta \end{equation}
+Another advantage of matrix multiplication notation for affine transformation is that we can easily get composite affine transformation \begin{equation} T=\prod_i T_i \end{equation} as well as the inverse transformation $T^{-1}$
+\subsubsection{Interpolation}
+After conduct geometric spatial transformation, the new grid points may not locate exactly on grid points in the new coordinate system. Interpolation is needed in this kind situation to find out th value of the grid points in the new coordinate system. Here, we talk about two methods of interpolation - nearest neighbor interpolation and bilinear interpolation.\\ 
+Nearest neighbor interpolation is the simplest and fastest interpolation method. In practice, we just use the $(x,y,1)^T = round(T^{-1}(u,v,1)^T)$ as nearest neighbor interpolation.\\
+In bilinear interpolation, we first calculate $(x',y')$ in $O_{xy}$ which is the original phase of a grid point $(u,v)$ in $O_{uv}$. Then find out the smallest rectangle that surround $(x', y')$ which is formed by 4 grid points $\{(x_0,y_0), (x_1,y_1), (x_2,y_2), (x_3,y_3)\}$ in $O_xy$. Thus we calculate the value at grid point $(x', y')$ as well as $(u,v)$ in $O_{uv}$ in the following way including 2 level of linear interpolation: \begin{equation} g_{0,1}(x',y')=\frac{x_1-x'}{x_1-x_0}f(x_0, y_0) + \frac{x'-x_0}{x_1-x_0}f(x_1, y_1)\end{equation} \begin{equation} g_{3,2}(x',y')=\frac{x_2-x'}{x_2-x_3}f(x_3, y_3) + \frac{x'-x_3}{x_2-x_3}f(x_2, y_2)  \end{equation} \begin{equation} g(x',y')=\frac{y_2-y'}{y_2-y_1}g_{0,1}(x',y') + \frac{y'-y_1}{y_2-y_1}g_{3,2}(x',y')  \end{equation}
+
+\subsection{Experiment}
+
+
+
+\subsection{Implementation}
+The main part of this implementation is on the function \emph{mytransform()}. The input parameters are three necessary parameters - input image, $3\times 3$ affine transform matrix, interpolation method and 3 optional parameters - horizontal and vertical display boundaries and filling colors for empty pixels. \\
+The idea is simple: First, find out the output image's size based only on the transform matrix and input image. The approach is to calculate the coordinates for four rectangle vertices. After consider the user defined boundary, we get the size of final output rectangle range. Then use the each grid coordinate $(u,v)$ to calculate the corresponding $(x,y)$ in input. After get $(x,y)$, get the pixel value $g(u,v)$ according to the interpolation methods. To get the little square where $(x,y)$ is in, another function \emph{bilinear_rect} is written.\\
+The code of \emph{mytransform} and \emph{bilinear_rect}is listed below:
+\lstset{language=Matlab}
+\begin{lstlisting}
+function [ imgg ] = mytransform( imgf, matT, interpolation, varargin )
+% MYTRANSFORM 
+%  imgf - input image, matT - transform matrix, interpolation - a string 'bilinear' or 'nearest'
+%  varargin contains boundX, boundY, fillValue
+ip = inputParser;
+ip.addParameter('boundX', [0, 0]);
+ip.addParameter('boundY', [0, 0]);
+ip.addParameter('fillValue', 0);
+ip.parse(varargin{:});
+para=ip.Results;
+    
+boundX = para.boundX;
+boundY = para.boundY;
+fillValue = para.fillValue;
+setBound=1;
+if (boundX(2)==boundX(1) || boundY(1)==boundY(2))
+    setBound=0;
+end
+
+[M, N] = size(imgf);
+X = [1 N N 1];
+Y = [1 1 M M];
+tmp = matT * [X; Y; ones(1,4)];
+
+minX = floor(min(tmp(1,:)));
+minY = floor(min(tmp(2,:)));
+maxX = ceil(max(tmp(1,:)));
+maxY = ceil(max(tmp(2,:)));
+
+if(setBound==1)
+    minX = boundX(1);
+    maxX = boundX(2);
+    minY = boundY(1);
+    maxY = boundY(2);
+end
+imgg = zeros(maxY-minY, maxX-minX);
+tmp = zeros(3,1);
+for i=(minY:maxY)
+    for j=(minX:maxX)
+        tmp = matT \ [i;j;1];
+        u = tmp(1);
+        v = tmp(2);    
+        if(isequal('bilinear', interpolation))
+            [X, Y, out] = bilinear_rect(tmp, M, N);
+            if(out==1)
+            	imgg(i, j) = fillValue;
+            	continue;
+            end
+            g_12 = (X(2)-u)/(X(2)-X(1))*imgf(X(1),Y(1)) + (u-X(1))/(X(2)-X(1))*imgf(X(1),Y(1));
+            g_34 = (X(3)-u)/(X(3)-X(4))*imgf(X(4),Y(4)) + (u-X(4))/(X(3)-X(4))*imgf(X(3),Y(3));
+            imgg(i, j) = (Y(3)-v)/(Y(3)-Y(2))*g_12 + (v-Y(2))/(Y(3)-Y(2))*g_34;
+        end
+        if(isequal('nearest', interpolation))
+        	if(round(u)>=1 && round(u)<=N && round(v)>=1 && round(v)<=N)
+            	imgg(i, j) = imgf(round(u), round(v));
+            end
+        end
+    end
+end
+end
+
+function [ X, Y, out ] = bilinear_rect(orig_p, M, N)
+% bilinear_rect
+u = orig_p(1);
+v = orig_p(2);
+X = zeros(1,4);
+Y = zeros(1,4);
+X(1) = floor(u);
+X(3) = ceil(u);
+if(X(1)==X(3))
+	X(3) = X(1)+1;
+end
+Y(1) = floor(v);
+Y(3) = ceil(v);
+if(Y(1)==Y(3))
+	Y(3) = Y(1)+1;
+end
+out = 0;
+if(X(1)<1 || X(3)>N || Y(1)<1 || Y(3)>M)
+	out = 1;
+end
+X(4) = X(1);
+X(2) = X(3);
+Y(4) = Y(3);
+Y(2) = Y(1);
+end
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
