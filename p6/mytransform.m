@@ -36,7 +36,7 @@ imgg = zeros(maxY-minY, maxX-minX);
 
 for i=(minY:maxY)
     for j=(minX:maxX)
-        tmp = matT \ [i;j;1];
+        tmp = matT \ [j;i;1];
         u = tmp(1);
         v = tmp(2);    
         if(isequal('bilinear', interpolation))
@@ -45,13 +45,13 @@ for i=(minY:maxY)
             	imgg(i-minY+1, j-minX+1) = fillValue;
             	continue;
             end
-            g_12 = (X(2)-u)/(X(2)-X(1))*imgf(X(1),Y(1)) + (u-X(1))/(X(2)-X(1))*imgf(X(1),Y(1));
-            g_34 = (X(3)-u)/(X(3)-X(4))*imgf(X(4),Y(4)) + (u-X(4))/(X(3)-X(4))*imgf(X(3),Y(3));
+            g_12 = (X(2)-u)/(X(2)-X(1))*imgf(Y(1),X(1)) + (u-X(1))/(X(2)-X(1))*imgf(Y(1),X(1));
+            g_34 = (X(3)-u)/(X(3)-X(4))*imgf(Y(4),X(4)) + (u-X(4))/(X(3)-X(4))*imgf(Y(3),X(3));
             imgg(i-minY+1, j-minX+1) = (Y(3)-v)/(Y(3)-Y(2))*g_12 + (v-Y(2))/(Y(3)-Y(2))*g_34;
         end
         if(isequal('nearest', interpolation))
         	if(round(u)>=1 && round(u)<=N && round(v)>=1 && round(v)<=M)
-            	imgg(i-minY+1, j-minX+1) = imgf(round(u), round(v));
+            	imgg(i-minY+1, j-minX+1) = imgf(round(v), round(u));
             end
         end
     end
