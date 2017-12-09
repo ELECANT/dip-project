@@ -1,0 +1,11 @@
+function [ U, V ] = gen_filter( P, Q )
+%GEN_FILTER generate filter
+%   [P, Q] is the size of filter,
+%   U and V are the meshgrid of centered filter
+
+
+
+u = (0:P-1) - P/2;
+v = v - Q/2;
+end
+

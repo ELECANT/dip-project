@@ -4,11 +4,10 @@ First implement the random noise generation functions. The random noise function
 Second follow the process shown in textbook \emph{FIGURE 5.7, FIGURE 5.8, FIGURE 5.10, FIGURE 5.11, FIGURE 5.12}. Each figure displays a process of add some specified type of noise and then use restoration method to reduce noise.
 
 \subsection{Preliminaries}
-
-
-
-
 \subsubsection{Noise Models}
+The principal source of noise in digital images arise during image acquisition and/or transmission. We assume in this project that noise is independent of spatial coordinates and uncorrelated with respect to the image itself. Thus, what we concerned is the statistical behavior of the intensity value in the noise component which can be described by PDF. 
+
+We can view the random variable from another view that does not involved PDF directly by generating random variable from uniform distribution. The idea is similar to the one we use in project 1's histogram equalization. 
 
 
 

@@ -1,0 +1,35 @@
+function [ imgg, f_freq, g_freq ] = dft_filter_func( imgf, H )
+%DFT_FILTER_FUNC 
+%   DFT_FILTER_FUNC accept an image imgf, and a filter H
+%   output the filtered image imgg, 
+%   and f_freq, g_freq(the frequency domain of imgf and imgg, respectively)
+
+
+% automatically pad imgf: pad_f
+imgf = double(imgf);
+[M, N] = size(imgf);
+P = M*2; Q = N*2;
+f_pad = zeros(P, Q);
+f_pad((1:M),(1:N))=imgf;
+
+% center pad_f
+a = -ones(1, P)';
+for i = (2:P)
+    a(i)=a(i-1)*(-1);
+end
+cx = repmat(a, 1, Q);
+a = -ones(1, Q);
+for i = (2:Q)
+    a(i)=a(i-1)*(-1);
+end
+cy=repmat(a, P, 1);
+f_pad = f_pad * cx * cy;
+
+%   fast fourier transform
+%   filter with H
+%   inverse fft and obtain the real part
+%   cut out the original size
+
+
+end
+
