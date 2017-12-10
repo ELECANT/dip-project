@@ -47,6 +47,14 @@ imwrite(f_salt, '42-salt.png');
 imwrite(f_salt_contraharmo, '42-salt-contraharmo.png');
 imwrite(f_pepper_contraharmo, '42-pepper-contraharmo.png');
 
+% graph 5.9 - pepper noise and salt noise contraharmonic Q=-1.5 and Q=1.5
+f_pepper_contraharmo_bad = contra_harmonic(f_pepper, 3, -1.5);
+f_salt_contraharmo_bad = contra_harmonic(f_salt, 3, 1.5);
+%figure, imshow(f_pepper_contraharmo_bad);
+%figure, imshow(f_salt_contraharmo_bad);
+imwrite(f_salt_contraharmo_bad, '42-salt-contraharmo_bad.png');
+imwrite(f_pepper_contraharmo_bad, '42-pepper-contraharmo_bad.png');
+
 % graph 5.10 - pepper&salt noise, median 3 times
 pepper = -255;
 salt = 255;
