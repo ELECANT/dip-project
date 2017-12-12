@@ -6,7 +6,8 @@ v = (0:Q-1);
 idx = find(u > P/2);
 u(idx) = u(idx) - P;
 idy = find(v > Q/2);
-u(idy) = u(idy) - Q;
+v(idy) = v(idy) - Q;
+
 [V, U] = meshgrid(v, u);
 end
 

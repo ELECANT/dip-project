@@ -86,29 +86,39 @@ The original test image of size $688 \times 688$ pixels and its non-padded cente
 \subsubsection{Image smoothing by lowpass filtering}
 Edges and other sharp intensity transitions (such as noise) in an image contribute significantly to the high frequency content of its Fourier transform. Hence, smoothing (blurring) is achieved in the frequency domain by high-frequency attenuation; that is, by lowpass filtering. \\
 
-I use 4 values of $D_0$ (10, 100, 1000, 4000) as the parameter of lowpass filters, generate the smoothed images and calculate power ratio of the filtering. The result is displayed in Figure.\ref{fig:ILPF}, Figure.\ref{fig:BLPF} and Figure.\ref{fig:GLPF}. In Butterworth filtering, I use $n=2$ as the order. 
+I use 6 values of $D_0$ (2, 5, 10, 30, 100, 400) as the parameter of lowpass filters, generate the smoothed images and calculate power ratio of the filtering. The result is displayed in Figure.\ref{fig:ILPF}, Figure.\ref{fig:BLPF} and Figure.\ref{fig:GLPF}. In Butterworth filtering, I use $n=2$ as the order. 
 
 \begin{figure}[h!]
 	\centering
 	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p3/ILPF_2.png}
+		\caption{$D_0=2$, power ratio=0.9033}
+		\label{fig:ILPF_2}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p3/ILPF_5.png}
+		\caption{$D_0=5$, power ratio=0.9184}
+		\label{fig:ILPF_5}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\linewidth}
 		\includegraphics[width=\linewidth]{myfigure/p3/ILPF_10.png}
-		\caption{$D_0=10$, power ratio=0.9098}
+		\caption{$D_0=10$, power ratio=0.9356}
 		\label{fig:ILPF_10}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p3/ILPF_30.png}
+		\caption{$D_0=30$, power ratio=0.9639}
+		\label{fig:ILPF_30}
 	\end{subfigure}
   	\begin{subfigure}[b]{0.45\linewidth}
 		\includegraphics[width=\linewidth]{myfigure/p3/ILPF_100.png}
-		\caption{$D_0=100$, power ratio=0.9231}
+		\caption{$D_0=100$, power ratio=0.9823}
 		\label{fig:ILPF_100}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.45\linewidth}
-		\includegraphics[width=\linewidth]{myfigure/p3/ILPF_1000.png}
-		\caption{$D_0=1000$, power ratio=0.9971}
-		\label{fig:ILPF_1000}
-	\end{subfigure}
-  	\begin{subfigure}[b]{0.45\linewidth}
-		\includegraphics[width=\linewidth]{myfigure/p3/ILPF_4000.png}
-		\caption{$D_0=4000$, power ratio=1.0000}
-		\label{fig:ILPF_4000}
+		\includegraphics[width=\linewidth]{myfigure/p3/ILPF_400.png}
+		\caption{$D_0=400$, power ratio=0.9997}
+		\label{fig:ILPF_400}
 	\end{subfigure}
   	\caption{Results of ideal lowpass filtering.}
   	\label{fig:ILPF}
@@ -117,24 +127,34 @@ I use 4 values of $D_0$ (10, 100, 1000, 4000) as the parameter of lowpass filter
 \begin{figure}[h!]
 	\centering
 	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p3/BLPF_2.png}
+		\caption{$D_0=2$, power ratio=0.9011}
+		\label{fig:BLPF_2}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p3/BLPF_5.png}
+		\caption{$D_0=5$, power ratio=0.9133}
+		\label{fig:BLPF_5}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\linewidth}
 		\includegraphics[width=\linewidth]{myfigure/p3/BLPF_10.png}
-		\caption{$D_0=10$, power ratio=0.9076}
+		\caption{$D_0=10$, power ratio=0.9285}
 		\label{fig:BLPF_10}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p3/BLPF_30.png}
+		\caption{$D_0=30$, power ratio=0.9577}
+		\label{fig:BLPF_30}
 	\end{subfigure}
   	\begin{subfigure}[b]{0.45\linewidth}
 		\includegraphics[width=\linewidth]{myfigure/p3/BLPF_100.png}
-		\caption{$D_0=100$, power ratio=0.9223}
+		\caption{$D_0=100$, power ratio=0.9797}
 		\label{fig:BLPF_100}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.45\linewidth}
-		\includegraphics[width=\linewidth]{myfigure/p3/BLPF_1000.png}
-		\caption{$D_0=1000$, power ratio=0.9673}
-		\label{fig:BLPF_1000}
-	\end{subfigure}
-  	\begin{subfigure}[b]{0.45\linewidth}
-		\includegraphics[width=\linewidth]{myfigure/p3/BLPF_4000.png}
-		\caption{$D_0=4000$, power ratio=0.9997}
-		\label{fig:BLPF_4000}
+		\includegraphics[width=\linewidth]{myfigure/p3/BLPF_400.png}
+		\caption{$D_0=400$, power ratio=0.9961}
+		\label{fig:BLPF_400}
 	\end{subfigure}
   	\caption{Results of Butterworth lowpass filtering.}
   	\label{fig:BLPF}
@@ -143,24 +163,34 @@ I use 4 values of $D_0$ (10, 100, 1000, 4000) as the parameter of lowpass filter
 \begin{figure}[h!]
 	\centering
 	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p3/GLPF_2.png}
+		\caption{$D_0=2$, power ratio=0.0.9016}
+		\label{fig:GLPF_2}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p3/GLPF_5.png}
+		\caption{$D_0=5$, power ratio=0.0.9139}
+		\label{fig:GLPF_5}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\linewidth}
 		\includegraphics[width=\linewidth]{myfigure/p3/GLPF_10.png}
-		\caption{$D_0=10$, power ratio=0.0.9075}
+		\caption{$D_0=10$, power ratio=0.0.9287}
 		\label{fig:GLPF_10}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p3/GLPF_30.png}
+		\caption{$D_0=30$, power ratio=0.0.9562}
+		\label{fig:GLPF_30}
 	\end{subfigure}
   	\begin{subfigure}[b]{0.45\linewidth}
 		\includegraphics[width=\linewidth]{myfigure/p3/GLPF_100.png}
-		\caption{$D_0=100$, power ratio=0.9219}
+		\caption{$D_0=100$, power ratio=0.9781}
 		\label{fig:GLPF_100}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.45\linewidth}
-		\includegraphics[width=\linewidth]{myfigure/p3/GLPF_1000.png}
-		\caption{$D_0=1000$, power ratio=0.9673}
-		\label{fig:GLPF_1000}
-	\end{subfigure}
-  	\begin{subfigure}[b]{0.45\linewidth}
-		\includegraphics[width=\linewidth]{myfigure/p3/GLPF_4000.png}
-		\caption{$D_0=4000$, power ratio=0.9972}
-		\label{fig:GLPF_4000}
+		\includegraphics[width=\linewidth]{myfigure/p3/GLPF_400.png}
+		\caption{$D_0=400$, power ratio=0.9948}
+		\label{fig:GLPF_400}
 	\end{subfigure}
   	\caption{Results of Gaussian lowpass filtering.}
   	\label{fig:GLPF}
@@ -170,24 +200,24 @@ I use 4 values of $D_0$ (10, 100, 1000, 4000) as the parameter of lowpass filter
 \subsubsection{Image sharpening by highpass filtering}
 Because edges and other abrupt changes in intensities are associated with high-frequency components, image sharpening can be achieved in the frequency domain by highpass filtering, which attenuates the low-frequency components without disturbing high-frequency information in the Fourier transform.
 
-I use 3 values of $D_0$ (10, 100, 1000) as the parameter of highpass filters, generate the sharpened images and calculate power ratio of the filtering. The result is displayed in Figure.\ref{fig:ILPF}, Figure.\ref{fig:BLPF} and Figure.\ref{fig:GLPF}.
+I use 3 values of $D_0$ (10, 30, 100) as the parameter of highpass filters, generate the sharpened images and calculate power ratio of the filtering. The result is displayed in Figure.\ref{fig:ILPF}, Figure.\ref{fig:BLPF} and Figure.\ref{fig:GLPF}.
 
 \begin{figure}[h!]
 	\centering
 	\begin{subfigure}[b]{0.3\linewidth}
 		\includegraphics[width=\linewidth]{myfigure/p3/IHPF_10.png}
-		\caption{$D_0=10$ power ratio=0.0901}
+		\caption{$D_0=10$ power ratio=0.0644}
 		\label{fig:IHPF_10}
 	\end{subfigure}
   	\begin{subfigure}[b]{0.3\linewidth}
-		\includegraphics[width=\linewidth]{myfigure/p3/IHPF_100.png}
-		\caption{$D_0=100$ power ratio=0.0768}
-		\label{fig:IHPF_100}
+		\includegraphics[width=\linewidth]{myfigure/p3/IHPF_30.png}
+		\caption{$D_0=30$ power ratio=0.0361}
+		\label{fig:IHPF_30}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.3\linewidth}
-		\includegraphics[width=\linewidth]{myfigure/p3/IHPF_1000.png}
-		\caption{$D_0=1000$ power ratio=0.0028}
-		\label{fig:IHPF_1000}
+		\includegraphics[width=\linewidth]{myfigure/p3/IHPF_100.png}
+		\caption{$D_0=100$ power ratio=0.0177}
+		\label{fig:IHPF_100}
 	\end{subfigure}
   	\caption{Results of ideal highpass filtering.}
   	\label{fig:IHPF}
@@ -197,18 +227,18 @@ I use 3 values of $D_0$ (10, 100, 1000) as the parameter of highpass filters, ge
 	\centering
 	\begin{subfigure}[b]{0.3\linewidth}
 		\includegraphics[width=\linewidth]{myfigure/p3/BHPF_10.png}
-		\caption{$D_0=10$ power ratio=0.0885}
+		\caption{$D_0=10$ power ratio=0.0584}
 		\label{fig:BHPF_10}
 	\end{subfigure}
   	\begin{subfigure}[b]{0.3\linewidth}
-		\includegraphics[width=\linewidth]{myfigure/p3/BHPF_100.png}
-		\caption{$D_0=100$ power ratio=0.0759}
-		\label{fig:BHPF_100}
+		\includegraphics[width=\linewidth]{myfigure/p3/BHPF_30.png}
+		\caption{$D_0=30$ power ratio=0.0311}
+		\label{fig:BHPF_30}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.3\linewidth}
-		\includegraphics[width=\linewidth]{myfigure/p3/BHPF_1000.png}
-		\caption{$D_0=1000$ power ratio=0.0069}
-		\label{fig:BHPF_1000}
+		\includegraphics[width=\linewidth]{myfigure/p3/BHPF_100.png}
+		\caption{$D_0=100$ power ratio=0.0147}
+		\label{fig:BHPF_100}
 	\end{subfigure}
   	\caption{Results of Butterworth highpass filtering.}
   	\label{fig:BHPF}
@@ -222,14 +252,14 @@ I use 3 values of $D_0$ (10, 100, 1000) as the parameter of highpass filters, ge
 		\label{fig:GHPF_10}
 	\end{subfigure}
   	\begin{subfigure}[b]{0.3\linewidth}
-		\includegraphics[width=\linewidth]{myfigure/p3/GHPF_100.png}
-		\caption{$D_0=100$ power ratio=0.0755}
-		\label{fig:GHPF_100}
+		\includegraphics[width=\linewidth]{myfigure/p3/GHPF_30.png}
+		\caption{$D_0=30$ power ratio=0.0755}
+		\label{fig:GHPF_30}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.3\linewidth}
-		\includegraphics[width=\linewidth]{myfigure/p3/GHPF_1000.png}
-		\caption{$D_0=1000$ power ratio=0.0054}
-		\label{fig:GHPF_1000}
+		\includegraphics[width=\linewidth]{myfigure/p3/GHPF_100.png}
+		\caption{$D_0=100$ power ratio=0.0054}
+		\label{fig:GHPF_100}
 	\end{subfigure}
   	\caption{Results of Gaussian highpass filtering.}
   	\label{fig:GHPF}
@@ -237,7 +267,7 @@ I use 3 values of $D_0$ (10, 100, 1000) as the parameter of highpass filters, ge
 
 
 \subsection{Discussion}
-In lowpass filter smoothing, the larger the $D_0$ is the less blurring there is in the images. In ideal lowpass filtering, we can clearly see ringing in Figure.\ref{fig:ILPF_10} and Figure.\ref{fig:ILPF_100}. This ringing is a characteristic of ideal lowpass. The Fourier transform of a vertical falling is the combination of infinite number of triangle functions. In Butterworth filtering with order $n=2$, there are still mild ringing but much less than those in the ideal filtering. I also notice a little vertical texture in the left part of the result images. In Gaussian lowpass filtering, we hardly see ringing and this is an important benefit in medical image processing because any artifact is unacceptable. However, Gaussian lowpass filtering provide less power ratio than the Butterworth with the same $D_0$. \\
+In lowpass filter smoothing, the larger the $D_0$ is the less blurring there is in the images. In ideal lowpass filtering, we can clearly see ringing in Figure.\ref{fig:ILPF_10} and Figure.\ref{fig:ILPF_100}. This ringing is a characteristic of ideal lowpass. The Fourier transform of a vertical falling is the combination of infinite number of triangle functions. In Butterworth filtering with order $n=2$, there are still mild ringing but much less than those in the ideal filtering. In Gaussian lowpass filtering, we hardly see ringing and this is an important benefit in medical image processing because any artifact is unacceptable. However, Gaussian lowpass filtering provide less power ratio than the Butterworth with the same $D_0$. \\
 
 In highpass filter sharpening, the larger the $D_0$ is the darker the result image is. This is because that the remain high frequency component is less when $D_0$ gets large. Thus the highpass result can help us to understand what the so-called high frequency component is in an image. It's not simple to find out differences between Butterworth highpass and Gaussian highpass. However, we can easily see that these two are much sharpen than the result of ideal highpass filtering which is influenced by ringing again.
 
@@ -280,7 +310,7 @@ v = (0:Q-1);
 idx = find(u > P/2);
 u(idx) = u(idx) - P;
 idy = find(v > Q/2);
-u(idy) = u(idy) - Q;
+v(idy) = v(idy) - Q;
 [V, U] = meshgrid(v, u);
 
 end

@@ -1,0 +1,16 @@
+function [ imgf ] = wiener_filter( imgg, H, K, noise, imgo )
+%WIENER_FILTER wiener filter used for blurred image with noise
+%   input image - imgg, degradation function H, 
+%   constant of signal-to-noise ratio
+
+Sn = abs(noise).^2;
+Sf = abs(imgo).^2;
+
+imgg = double(imgg);
+G = fft2(imgg);
+H2 = abs(H) .^ 2;
+F = (H2 ./ (H .* (H2 + Sn./Sf))) .* G;
+imgf = real(ifft2(F));
+imgf = uint8(scale255(imgf));
+
+end
