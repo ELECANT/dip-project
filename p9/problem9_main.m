@@ -3,7 +3,8 @@
 % Edge dectection: Roberts, Prewitt, Sobel, Marr-Hildreth, Canny
 % Threshold segmentation: Otsu's method
 % author: wang.yiqing
-% Dependent function: TODO
+% Dependent function: roberts, prewitt, sobel, marr_hildreth, zero_cross, canny 
+% 					  otsu_thresholding, basic_global_thresholding
 
 %=========================================================================
 

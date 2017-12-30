@@ -54,7 +54,7 @@ When $T$ is a constant applicable over an entire image, the process given in thi
 Global thresholding seems very simple as we just need to select a proper value for $T$, but the problem is that, usually, we cannot directly find out such a $T$ that separates the hills in histogram. Noise in the image, illumination and reflectance and so on factors lead to this effect.
 Then we discuss an attractive alternative \textbf{Otus's method} which is based entirely on computations performed on the histogram of an image. The algorithm can be summarized as follows:\\
 \textbf{1.} Compute the normalized histogram of the input image. Denote the components of the histogram by $p_i, i=0,1,...,L-1$.\\
-\texfbf{2.} Compute the cumulative sums, $P_1(k)$, for $k=0,1,...,L-1$, using \begin{equation} P_1(k)=\sum_{i=0}^k p_i \end{equation}
+\textbf{2.} Compute the cumulative sums, $P_1(k)$, for $k=0,1,...,L-1$, using \begin{equation} P_1(k)=\sum_{i=0}^k p_i \end{equation}
 \textbf{3.} Compute the cumulative means, $m(k)$, for $k=0,1,...,L-1$ using \begin{equation} m(k)=\sum_{i=0}^k ip_i\end{equation}
 \textbf{4.} Compute the global intensity mean, $m_G$, using \begin{equation} m_G=\sum_{i=0}^{L-1}ip_i \end{equation}
 \textbf{5.} Compute the between-class variance, $\sigma^2_B(k)$, for $k=0,1,...,L-1$ using \begin{equation} \sigma_B^2(k)=\frac{[m_GP_1(k)-m(k)]^2}{P_1(k)[1-P_1(k)]}\end{equation}
