@@ -13,8 +13,8 @@ gx = zeros(M+4, N+4);
 gy = zeros(M+4, N+4);
 for x = (2 : M+3)
     for y = (2 : N+3)
-        gx(x-1:x+1, y-1:y+1) = sum(sum(f(x-1:x+1, y-1:y+1) .* maskx));
-        gy(x-1:x+1, y-1:y+1) = sum(sum(f(x-1:x+1, y-1:y+1) .* masky));
+        gx(x, y) = sum(sum(f(x-1:x+1, y-1:y+1) .* maskx));
+        gy(x, y) = sum(sum(f(x-1:x+1, y-1:y+1) .* masky));
     end
 end
 

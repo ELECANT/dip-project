@@ -71,32 +71,102 @@ We finally get a satisfy result in the Fig.2.4h which shows significant new visi
 Here I paste the key parts of my matlab implementation.
 \lstset{language=Matlab}
 \begin{lstlisting}
-% key part of function erosion
-for i = (1:M-m+1)
-    for j = (1:N-n+1)
-        x = imgf(i:i+m-1, j:j+n-1);
-        if sum(sum(x.*B)) == m*n
-            g(i+downshift, j+rightshift) = 1;
-        end
+function [ imgg ] = replicate_padding( imgf, pad )
+%REPLIACTE_PADDING
+% imgf - img to be padded, pad - amount of padding 
+[M, N] = size(imgf);
+% repmat(mat, row_rep, col_rep);
+top = repmat(imgf(1, :), pad, 1);
+button = repmat(imgf(M, :), pad, 1);
+left = repmat(imgf(:, 1), 1, pad);
+right = repmat(imgf(:, N), 1, pad);
+lt = repmat(imgf(1,1), pad, pad);
+rt = repmat(imgf(1,N), pad, pad);
+lb = repmat(imgf(M,1), pad, pad);
+rb = repmat(imgf(M,N), pad, pad);
+imgg = [lt, top, rt; left, imgf, right; lb, button, rb];
+end
+\end{lstlisting}
+
+\lstset{language=Matlab}
+\begin{lstlisting}
+function [ scale_imgg, imgg] = b_laplacian_scale( imgf )
+%B_LAPLACIAN_SCALE 
+[M, N] = size(imgf);
+% padding
+f = replicate_padding(imgf, 2);
+f = double(f);
+% laplacian
+mask = [-1 -1 -1; -1 8 -1; -1 -1 -1];
+g = zeros(M+4, N+4);
+for x = (2 : M+3)
+    for y = (2 : N+3)
+        g(x, y) = sum(sum(f(x-1:x+1, y-1:y+1) .* mask));
     end
 end
-
-% key part of dilation_reconstruction 
-k_times = 0;
-while( ~isequal(f0, f1) )
-    k_times = k_times + 1;
-    f0 = f1;
-    f1 = geodesic_dilation(f1, G, B);
+imgg = g(3:M+2, 3:N+2); % laplacian result without scale
+% scale
+scale_imgg = scale255(imgg);
 end
-
-% key part of geodesic_dilation
-imgg = dilation(imgf, B) & G;
-
-% key part of opening_reconstruction
-for i=(1:n_size)
-    f_erosion = erosion(f_erosion, B);
+\end{lstlisting}
+\lstset{language=Matlab}
+\begin{lstlisting}
+function [ imgg ] = d_sobel( imgf )
+%D_SOBEL 
+[M, N] = size(imgf);
+f = replicate_padding(imgf, 2);
+f = double(f); % double f
+% Sobel
+maskx = [-1 -2 -1; 0 0 0; 1 2 1];
+masky = [-1 0 1; -2 0 2; -1 0 1];
+gx = zeros(M+4, N+4);
+gy = zeros(M+4, N+4);
+for x = (2 : M+3)
+    for y = (2 : N+3)
+        gx(x, y) = sum(sum(f(x-1:x+1, y-1:y+1) .* maskx));
+        gy(x, y) = sum(sum(f(x-1:x+1, y-1:y+1) .* masky));
+    end
 end
-[imgg, k_times] = dilation_reconstruction(f_erosion, imgf, ones(3,3)); % here can not use ones(51, 1)
+% new image: using abs
+gx = abs(gx(3:M+2, 3:N+2));
+gy = abs(gy(3:M+2, 3:N+2));
+imgg = scale255(gx+gy);
+end
+\end{lstlisting}
+\lstset{language=Matlab}
+\begin{lstlisting}
+function [ imgg ] = scale255( imgf )
+%SCALE255 
+% return is uint8 type
+%imgf = double(imgf);
+[M, N] = size(imgf);
+K = 255;
+
+minf = zeros(M, N) + min(min(imgf));
+maxf = zeros(M, N) + max(max(imgf));
+imgg = K * (imgf-minf) ./ (maxf - minf);
+imgg = uint8(imgg);
+end
+\end{lstlisting}
+
+\lstset{language=Matlab}
+\begin{lstlisting}
+function [ imgg ] = e_5x5_average( imgf )
+%E_5X5_AVERAGE
+[M, N] = size(imgf);
+% padding
+f = replicate_padding(imgf, 4);
+f = double(f);
+% 5x5 average
+g = zeros(M+8, N+8);
+for x = (3 : M+6)
+    for y = (3 : N+6)
+        g(x, y) = sum(sum(f(x-2:x+2, y-2:y+2))) / 25;
+    end
+end
+imgg = g(5:M+4, 5:N+4); % laplacian result without scale
+imgg = uint8(imgg);
+end
 \end{lstlisting}
 
 \clearpage

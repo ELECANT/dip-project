@@ -62,13 +62,13 @@ imwrite(f_blur_gaussian_006, '5_blur_gaussian_006.png');
 f_inverse_blur = wiener_filter(H, 0, zeros(M, N), f_orig);
 figure, imshow(f_inverse_blur);
 imwrite(f_inverse_blur, '5_inverse_blur.png');
-f_inverse_650 = wiener_filter(H, 0, noise_gaussian_650, f_orig); %0.01
+f_inverse_650 = wiener_filter(H, 0, noise_gaussian_650, f_orig); 
 figure, imshow(f_inverse_650);
 imwrite(f_inverse_650, '5_inverse_650.png');
-f_inverse_65 = wiener_filter(H, 0, noise_gaussian_65, f_orig); % 0.008
+f_inverse_65 = wiener_filter(H, 0, noise_gaussian_65, f_orig); 
 figure, imshow(f_inverse_65);
 imwrite(f_inverse_65, '5_inverse_65.png');
-f_inverse_006 = wiener_filter( H, 0, noise_gaussian_006, f_orig); %0.002
+f_inverse_006 = wiener_filter( H, 0, noise_gaussian_006, f_orig); 
 figure, imshow(f_inverse_006);
 imwrite(f_inverse_006, '5_inverse_006.png');
 
