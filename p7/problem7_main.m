@@ -1,7 +1,8 @@
 % DIP problem 7
 % Transform Image Compression
+% DCT block coding, wavelet compression
 % author: wang.yiqing
-% Dependent function: TODO
+% Dependent function: dct_mask, zonal_coding, thresholding_coding
 
 % ========================================================================
 % DCT compression
@@ -17,7 +18,7 @@ imwrite(f_orig, 'lenna.png');
 dctmask = dct_mask(8);
 
 % zonal mask
-%{
+
 [f_zonal_5, f_zonal_5_diff] = zonal_coding(f_orig, 8, dctmask, dctmask', 5);
 figure, imshow(f_zonal_5);
 figure, imshow(f_zonal_5_diff);
@@ -35,6 +36,4 @@ figure, imshow(f_threshold_median);
 figure, imshow(f_threshold_median_diff);
 imwrite(f_threshold_median, '7_threshold_median.png');
 imwrite(f_threshold_median_diff, '7_threshold_median_diff.png');
-%}
-
 

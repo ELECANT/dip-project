@@ -9,52 +9,52 @@
 %=========================================================================
 
 % read in image 
-%fp = 'building.tif';
-%f_orig = imread(fp);
-%[M, N] = size(f_orig);
-%figure, imshow(f_orig);
-%imwrite(f_orig, 'building.png');
+fp = 'building.tif';
+f_orig = imread(fp);
+[M, N] = size(f_orig);
+figure, imshow(f_orig);
+imwrite(f_orig, 'building.png');
 
 %=========================================================================
 % 1). Edge detection
 
 % Roberts filter
-%f_roberts = roberts(f_orig);
-%figure, imshow(f_roberts);
-%imwrite(f_roberts, '9_roberts.png');
+f_roberts = roberts(f_orig);
+figure, imshow(f_roberts);
+imwrite(f_roberts, '9_roberts.png');
 
 % Prewitt filter
-%f_prewitt = prewitt(f_orig);
-%figure, imshow(f_prewitt);
-%imwrite(f_prewitt, '9_prewitt.png');
+f_prewitt = prewitt(f_orig);
+figure, imshow(f_prewitt);
+imwrite(f_prewitt, '9_prewitt.png');
 
 % Sobel filter
-%f_sobel = prewitt(f_orig);
-%figure, imshow(f_sobel);
-%imwrite(f_sobel, '9_sobel.png');
+f_sobel = prewitt(f_orig);
+figure, imshow(f_sobel);
+imwrite(f_sobel, '9_sobel.png');
 
 % Marr-Hildreth
-%[~, f_zerocross_0] = marr_hildreth(f_orig, 4, 25, 0);
-%[~, f_zerocross_4] = marr_hildreth(f_orig, 4, 25, 0.04);
-%[~, f_zerocross_8] = marr_hildreth(f_orig, 4, 25, 0.08);
-%[f_marrhildreth, f_zerocross_12] = marr_hildreth(f_orig, 4, 25, 0.12);
-%figure, imshow(f_marrhildreth);
-%figure, imshow(f_zerocross_0);
-%figure, imshow(f_zerocross_4);
-%figure, imshow(f_zerocross_8);
-%figure, imshow(f_zerocross_12);
-%imwrite(f_marrhildreth, '9_marrhildreth.png');
-%imwrite(f_zerocross_0, '9_zerocross_0.png');
-%imwrite(f_zerocross_4, '9_zerocross_4.png');
-%imwrite(f_zerocross_8, '9_zerocross_8.png');
-%imwrite(f_zerocross_12, '9_zerocross_12.png');
+[~, f_zerocross_0] = marr_hildreth(f_orig, 4, 25, 0);
+[~, f_zerocross_4] = marr_hildreth(f_orig, 4, 25, 0.04);
+[~, f_zerocross_8] = marr_hildreth(f_orig, 4, 25, 0.08);
+[f_marrhildreth, f_zerocross_12] = marr_hildreth(f_orig, 4, 25, 0.12);
+figure, imshow(f_marrhildreth);
+figure, imshow(f_zerocross_0);
+figure, imshow(f_zerocross_4);
+figure, imshow(f_zerocross_8);
+figure, imshow(f_zerocross_12);
+imwrite(f_marrhildreth, '9_marrhildreth.png');
+imwrite(f_zerocross_0, '9_zerocross_0.png');
+imwrite(f_zerocross_4, '9_zerocross_4.png');
+imwrite(f_zerocross_8, '9_zerocross_8.png');
+imwrite(f_zerocross_12, '9_zerocross_12.png');
 
 % Canny
-%[f_canny, f_threshold_only] = canny(f_orig, 4, 25, 0.01, 0.02);
-%figure, imshow(f_canny);
-%imwrite(f_canny, '9_canny.png');
-%figure, imshow(f_threshold_only);
-%imwrite(f_canny, '9_threshold_only.png');
+[f_canny, f_threshold_only] = canny(f_orig, 4, 25, 0.01, 0.02);
+figure, imshow(f_canny);
+imwrite(f_canny, '9_canny.png');
+figure, imshow(f_threshold_only);
+imwrite(f_canny, '9_threshold_only.png');
 
 
 %=========================================================================

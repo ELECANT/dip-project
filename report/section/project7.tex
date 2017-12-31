@@ -9,7 +9,7 @@ There are two parts in this project. Both parts use \emph{lenna.tif} as test ima
 Block transform coding is a widely used technique appears in many compression standards (JPEG, M-JPEG, MPEG-1,2,4......). We divides an image into small non-overlapping blocks of equal size (e.g. $8\times 8$) and processes the blocks independently using a 2-D transform. A reversible linear transform is used to map each block into a set of transform coefficients, which are then quantized and coded. In this project, we use DCT as the transform function. The overview diagram of the block coding system is displayed in Fig.\ref{fig:blocksys}. 
 \begin{figure}[h!]
 	\centering	
-	\includegraphics[width=0.7\linewidth]{myfigure/p7/block_system.png}
+	\includegraphics[width=0.4\linewidth]{myfigure/p7/block_system.png}
 	\caption{Overview of block transform coding system with encoder and decoder.}
 	\label{fig:blocksys}
 \end{figure}
@@ -36,8 +36,205 @@ Here we discuss two most popular methods for retained coefficients selection whi
 	\label{fig:bitalloc}
 \end{figure}
 
-\subsubsection{}
+\subsection{Experiment}
+The result of zonal mask and threshold mask compression using DCT transformation is displayed in Fig.\ref{fig:7dct}. I use two zonal masks. One is with 15 coefficients and the other is with 3 coefficients. The threshold mask is set to use median of the transform as the threshold. This is learned from the internet blog as I didn't find the threshold setting on the textbook.
 
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[b]{0.3\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p7/lenna.png}
+		\caption{}
+		\label{fig:lenna}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p7/7_zonal_2.png}
+		\caption{}
+		\label{fig:7zonal2}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p7/7_zonal_2_diff.png}
+		\caption{}
+		\label{fig:7zonal2diff}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p7/lenna.png}
+		\caption{}
+		\label{fig:lenna}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p7/7_zonal_5.png}
+		\caption{}
+		\label{fig:7zonal5}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p7/7_zonal_5_diff.png}
+		\caption{}
+		\label{fig:7zonal5diff}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p7/lenna.png}
+		\caption{}
+		\label{fig:lenna}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p7/7_threshold_median.png}
+		\caption{}
+		\label{fig:7threshold}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p7/7_threshold_median_diff.png}
+		\caption{}
+		\label{fig:7thresholddiff}
+	\end{subfigure}
+	
+	\caption{$8\times 8$ subimage DCT transform. First column are the same original image. Second column images are the compression result. The third column is the difference. \\1st Row: zonal mask with 15 coefficients. \\ 2nd Row: zonal mask with 3 coefficients. \\3rd Row: threshold mask using median value as threshold.}
+	\label{fig:7dct}
+\end{figure}
+
+\clearpage
+\subsection{Implementation}
+The most important functions are \emph{dct\_mask, threshold\_coding, zonal\_coding}.
+\lstset{language=Matlab}
+\begin{lstlisting}
+function [ dct_mask ] = dct_mask( n )
+%DCT_MASK generate dct mask
+%   m, n: the size of dct mask
+
+dct_mask = zeros(n);
+for u = (1:n)
+    for x = (1:n)
+        if u==1
+            alphau = sqrt(1/n);
+        else
+            alphau = sqrt(2/n);
+        end
+        dct_mask(u,x) = alphau * cos(pi*(2*x-1)*(u-1)/2/n);
+    end
+end
+
+end
+\end{lstlisting}
+
+\lstset{language=Matlab}
+\begin{lstlisting}
+function [ imgg, diff ] = zonal_coding( imgf, bsize, rx, ry, mask_num )
+%ZONAL_CODING
+%   bsize: size of subimage; rx, ry: transform mask; mask: zonal mask
+
+[M, N] = size(imgf);
+bm = fix(M/bsize);
+bn = fix(N/bsize);
+imgf = double(imgf);
+
+% transform T
+T = zeros(M, N);
+for i = (1:bm)
+    for j = (1:bn)
+        xrange = (bsize*(i-1)+1 : bsize*i);
+        yrange = (bsize*(j-1)+1 : bsize*j);
+        T(xrange, yrange) = rx * imgf(xrange,yrange) * ry;
+    end
+end
+
+% generate mask
+mask = zeros(bsize, bsize);
+for i = (1:bsize)
+    for j = (1:bsize)
+        if i+j<=mask_num+1
+            mask(i,j) = 1;
+        end
+    end
+end
+
+% zonal mask
+T_mask = zeros(M, N);
+for i = (1:bm)
+    for j = (1:bn)
+        xrange = (bsize*(i-1)+1 : bsize*i);
+        yrange = (bsize*(j-1)+1 : bsize*j);
+        T_mask(xrange, yrange) = T(xrange,yrange) .* mask;
+    end
+end
+
+% inverse transform
+imgg = zeros(M, N);
+for i = (1:bm)
+    for j = (1:bn)
+        xrange = (bsize*(i-1)+1 : bsize*i);
+        yrange = (bsize*(j-1)+1 : bsize*j);
+        imgg(xrange, yrange) = ry * T_mask(xrange,yrange) * rx;
+    end
+end
+
+% calculcate difference
+diff = abs(imgg - imgf);
+diff = uint8(4*diff);
+
+imgg = uint8(scale255(imgg));
+
+end
+\end{lstlisting}
+
+\lstset{language=Matlab}
+\begin{lstlisting}
+function [ imgg, diff ] = threshold_coding( imgf, bsize, rx, ry )
+%THRESHOLD_CODING 
+%   bsize: size of subimage; rx, ry: transform mask;
+
+[M, N] = size(imgf);
+bm = fix(M/bsize);
+bn = fix(N/bsize);
+imgf = double(imgf);
+
+% transform T
+T = zeros(M, N);
+for i = (1:bm)
+    for j = (1:bn)
+        xrange = (bsize*(i-1)+1 : bsize*i);
+        yrange = (bsize*(j-1)+1 : bsize*j);
+        T(xrange, yrange) = rx * imgf(xrange,yrange) * ry;
+    end
+end
+
+% generate threshold 
+mask = zeros(bsize, bsize);
+med = median(rx(:));
+for i = (1:bsize)
+    for j = (1:bsize)
+        if rx(i,j)>=med
+            mask(i,j) = 1;
+        end
+    end
+end
+
+% threshold mask
+T_mask = zeros(M, N);
+for i = (1:bm)
+    for j = (1:bn)
+        xrange = (bsize*(i-1)+1 : bsize*i);
+        yrange = (bsize*(j-1)+1 : bsize*j);
+        T_mask(xrange, yrange) = T(xrange,yrange) .* mask;
+    end
+end
+
+% inverse transform
+imgg = zeros(M, N);
+for i = (1:bm)
+    for j = (1:bn)
+        xrange = (bsize*(i-1)+1 : bsize*i);
+        yrange = (bsize*(j-1)+1 : bsize*j);
+        imgg(xrange, yrange) = ry * T_mask(xrange,yrange) * rx;
+    end
+end
+
+% calculcate difference
+diff = abs(imgg - imgf);
+diff = uint8(4*diff);
+
+imgg = uint8(scale255(imgg));
+
+end
+\end{lstlisting}
 
 
 

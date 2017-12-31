@@ -1,7 +1,7 @@
 % DIP problem 6
 % Geometric transformation and interpolation
 % author: wang.yiqing
-% Dependent functions: TODO
+% Dependent functions: mytransform
 
 % ========================================================================
 

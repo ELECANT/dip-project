@@ -79,7 +79,7 @@ end
 function [first_diff] = cal_first_diff(chain_code, dir_num)
 
 [~, N] = size(chain_code);
-first_diff = zeros(N);
+first_diff = zeros(1, N);
 for i = (2:N)
     first_diff(i) = chain_code(i) - chain_code(i-1);
     if first_diff(i)<0

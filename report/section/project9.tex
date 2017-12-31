@@ -63,7 +63,501 @@ Then we discuss an attractive alternative \textbf{Otus's method} which is based 
 \textbf{6.} Obtain the Otsu threshold, $K^*$, as the value of $k$ for which $\sigma_B^2(k)$ is maximum. If the maximum is not unique, obtain $k^*$ by averaging the values of $k$ corresponding to the various maxima detected. \\
 \textbf{7.} Obtain the separability measure, $\eta ^ *$, by at $k=k^*$ evaluating \begin{equation} \eta(k)=\frac{\sigma_B^2(k)}{\sigma_G^2}, \sigma_G^2=\sum_{i=0}^{L-1}(i-m_G)^2p_i \end{equation} 
 
+\subsection{Experiment}
+\subsubsection{Edge detection}
+First, I display the basic method that only use derivative mask for convolution. These masks are \emph{Roberts, Prewitt and Sobel}. The results are shown in Fig.\ref{fig:basic_edge}. We can see that the result of Sobel and Prewitt is very similar while the result of Roberts is not as good as the two because of lower significance of edges.\\
 
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p9/building.png}
+		\caption{}
+		\label{fig:basic_building}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\linewidth}
+    	\includegraphics[width=\linewidth]{myfigure/p9/9_roberts.png}
+    	\caption{}
+    	\label{fig:roberts}
+  	\end{subfigure}
+  	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p9/9_prewitt.png}
+		\caption{}
+		\label{fig:prewitt}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\linewidth}
+    	\includegraphics[width=\linewidth]{myfigure/p9/9_sobel.png}
+    	\caption{}
+    	\label{fig:sobel}
+  	\end{subfigure}
+  	\caption{Basic edge detection methods. (a)Original test image of size $834 \times 1115$. (b)Edge detection by Roberts mask. (c) Edge detection by Prewitt mask. (d)Edge detection by Sobel mask.}
+  	\label{fig:basic_edge}
+\end{figure}
 
+Second, I show the process of applying Marr-Hildreth algorithm in Fig.\ref{fig:marr_hildreth}. In (c)-(d), we can see the effect of using threshold. I think that the use of Gaussian lowpass filter is a good idea for create margin between edge and other pixels. As there may be some trivial different between builtin function and self-defined function, the parameters used here is different from the ones given on the textbook. The size of Gaussian lowpass filter is $25\times 25$ and the variance is $\sigma=4$. After trying threshold as 0.04, 0.08, 0.12, I find $0.08$ is the best one.\\
 
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p9/building.png}
+		\caption{}
+		\label{fig:marr_building}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\linewidth}
+    	\includegraphics[width=\linewidth]{myfigure/p9/9_marrhildreth.png}
+    	\caption{}
+    	\label{fig:marrhildreth}
+  	\end{subfigure}
+  	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p9/9_zerocross_0.png}
+		\caption{}
+		\label{fig:zerocross_0}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p9/9_zerocross_4.png}
+		\caption{}
+		\label{fig:zerocross_4}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p9/9_zerocross_8.png}
+		\caption{}
+		\label{fig:zerocross_8}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p9/9_zerocross_12.png}
+		\caption{}
+		\label{fig:zerocross_12}
+	\end{subfigure}
+	
+	\caption{Marr-Hildreth edge detection. \\(a)Original test image of size $834 \times 1115$.\\ (b)Results of Marr-Hildreth(before zero-cross). The gaussian lowpass filter($25\times 25$) used here is with $\sigma=4$.\\  (c)The result of zero cross $threshold=0$.\\ (d)The result of zero cross $threshold=0.04$.\\ (e)The result of zero cross $threshold=0.08$.\\ (f)The result of zero cross $threshold=0.12$.}
+  	\label{fig:marr_hildreth}
+\end{figure}
+
+Third, I show the process of applying Canny's algorithm in Fig.\ref{fig:eval_canny}. For comparison, Gaussian lowpass filter used here is the same as the one in Marr-Hildreth. The double threshold is $T_H=0.2, T_L=0.1$. We can simply find the Canny's algorithm works better than Marr-Hildreth here. The image in Fig.\ref{fig:thresholdonly} is obtained by use $T_L$, and the result is coarse because of Gaussian smoothing.\\
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p9/building.png}
+		\caption{}
+		\label{fig:canny_building}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\linewidth}
+    	\includegraphics[width=\linewidth]{myfigure/p9/9_threshold_only.png}
+    	\caption{}
+    	\label{fig:thresholdonly}
+  	\end{subfigure}
+  	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p9/9_zerocross_12.png}
+		\caption{}
+		\label{fig:zerocross_12_}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p9/9_canny.png}
+		\caption{}
+		\label{fig:canny}
+	\end{subfigure}
+	
+	\caption{Canny edge detection. \\(a)Original test image of size $834 \times 1115$.\\ (b)Use single threshold $T_L$ after Gaussian smoothing. \\(c)Result of Marr-Hildreth(before zero-cross). The Gaussian lowpass filter($25\times 25$) used here is with $\sigma=4$.\\ (d)The result of zero cross $threshold=0.04$.}
+  	\label{fig:eval_canny}
+\end{figure}
+
+\subsubsection{Global thresholding}
+Practice on global thresholding is shown in Fig.\ref{fig:globalthresholding}. The original image is an optical microscope image of polymersome cells. From its histogram, we can see the contrast ratio between foreground and background is low. Hence, it's not surprising the basic global thresholding failed. Using Otsu's method here, we obtain good result. In basic thresholding, I set the $\Delta=1.0$, and obtain $T=169.394997$. In Otse's method, the result is $T=181.000000$ and $Seperability=0.465212$. 
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p9/polymersomes.png}
+		\caption{}
+		\label{fig:polymersomes}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\linewidth}
+    	\includegraphics[width=\linewidth]{myfigure/p9/9_polymersomes_hist.png}
+    	\caption{}
+    	\label{fig:polymersomes_hist}
+  	\end{subfigure}
+  	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p9/9_threshold_basic.png}
+		\caption{}
+		\label{fig:threshold_basic}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\linewidth]{myfigure/p9/9_threshold_otsu.png}
+		\caption{}
+		\label{fig:threshold_otsu}
+	\end{subfigure}
+	
+	\caption{Global thresholding. \\(a)Original test image (b)Histogram of the test image. \\(c)Basic thresholding end with $T=169.394997$\\ (d)Otsu's method end with $T=181.000000, sepearablity=0.465212$.}
+  	\label{fig:globalthresholding}
+\end{figure}
+
+\clearpage
+\subsection{Implementation}
+Here list the function implemented in this project. They are \emph{roberts, prewitt, sobel, marr\_hildreth, canny, basic\_global\_thresholding, otsu\_thresholding}.
+
+\lstset{language=Matlab}
+\begin{lstlisting}
+function [ imgg ] = roberts( imgf )
+%ROBERTS 
+%   robert filter, two with 3x3 masks on axis-x and axis-y
+
+[M, N] = size(imgf);
+
+f = replicate_padding(imgf, 2);
+f = double(f); % double f
+
+% Roberts
+maskx = [0 0 0 ; 0 -1 0; 0 0 1];
+masky = [0 0 0; 0 0 -1; 0 1 0];
+
+gx = zeros(M+4, N+4);
+gy = zeros(M+4, N+4);
+
+for x = (2 : M+3)
+    for y = (2 : N+3)
+        gx(x, y) = sum(sum(f(x-1:x+1, y-1:y+1) .* maskx));
+        gy(x, y) = sum(sum(f(x-1:x+1, y-1:y+1) .* masky));
+    end
+end
+
+% new image: using abs ,some negative
+gx = abs(gx(3:M+2, 3:N+2));
+gy = abs(gy(3:M+2, 3:N+2));
+imgg = scale255(gx+gy);
+
+end
+\end{lstlisting}
+
+\lstset{language=Matlab}
+\begin{lstlisting}
+function [ imgg ] = prewitt( imgf )
+%PREWITT prewitt filter
+%   two 3x3 masks
+
+[M, N] = size(imgf);
+
+f = replicate_padding(imgf, 2);
+f = double(f); % double f
+
+maskx = [-1 -1 -1; 0 0 0; 1 1 1];
+masky = [-1 0 1; -1 0 1; -1 0 1];
+
+gx = zeros(M+4, N+4);
+gy = zeros(M+4, N+4);
+
+for x = (2 : M+3)
+    for y = (2 : N+3)
+        gx(x, y) = sum(sum(f(x-1:x+1, y-1:y+1) .* maskx));
+        gy(x, y) = sum(sum(f(x-1:x+1, y-1:y+1) .* masky));
+    end
+end
+
+% new image: using abs ,some negative
+gx = abs(gx(3:M+2, 3:N+2));
+gy = abs(gy(3:M+2, 3:N+2));
+imgg = scale255(gx+gy);
+
+end
+\end{lstlisting}
  
+ \lstset{language=Matlab}
+\begin{lstlisting}
+function [ imgg ] = sobel( imgf )
+%SOBEL 
+
+[M, N] = size(imgf);
+
+f = replicate_padding(imgf, 2);
+f = double(f); % double f
+
+% Sobel
+maskx = [-1 -2 -1; 0 0 0; 1 2 1];
+masky = [-1 0 1; -2 0 2; -1 0 1];
+gx = zeros(M+4, N+4);
+gy = zeros(M+4, N+4);
+for x = (2 : M+3)
+    for y = (2 : N+3)
+        gx(x, y) = sum(sum(f(x-1:x+1, y-1:y+1) .* maskx));
+        gy(x, y) = sum(sum(f(x-1:x+1, y-1:y+1) .* masky));
+    end
+end
+
+% new image: using abs
+gx = abs(gx(3:M+2, 3:N+2));
+gy = abs(gy(3:M+2, 3:N+2));
+imgg = scale255(gx+gy);
+
+end
+\end{lstlisting}
+
+\lstset{language=Matlab}
+\begin{lstlisting}
+function [ imgg, imgcross ] = marr_hildreth( imgf, sigma, n, threshold )
+%MARR_HILDRETH 
+%   sigma - variance of Gaussian, n - size of gaussiain lowpass filter
+
+% generate gaussian filter
+x = (1:n) - (n+1)/2;
+y = x';
+x = repmat(x, n, 1);
+y = repmat(y, 1, n);
+D2 = x.^2 + y.^2;
+gau_filter = exp(-D2 / (2*sigma*sigma));
+
+% preprocess
+[M, N] = size(imgf);
+imgf = double(imgf) ./ 255;
+f = replicate_padding(imgf, n-1);
+f = double(f); % double f
+
+% convolution
+g = zeros(M+2*n, N+2*n);
+for x = (n : M+n-1)
+    for y = (n : N+n-1)
+        xlow = fix(x - fix((n-1)/2));
+        xhigh = fix(x + fix((n-1)/2));
+        ylow = fix(y - fix((n-1)/2));
+        yhigh = fix(y + fix((n-1)/2));
+        g(x,y) = sum(sum(f(xlow:xhigh,ylow:yhigh) .* gau_filter));
+    end
+end
+
+f = g(n:M+n-1, n:N+n-1) * 255;
+% laplacian
+f = replicate_padding(f, 2);
+mask = [1 1 1; 1 -8 1; 1 1 1];
+g = zeros(M+4, N+4);
+for x = (2 : M+3)
+    for y = (2 : N+3)
+        g(x, y) = sum(sum(f(x-1:x+1, y-1:y+1) .* mask));
+    end
+end
+
+% do zero cross
+g = g(3:M+2, 3:N+2);
+imgcross = zero_cross(g, threshold*max(max(g)));
+
+imgg = g; % laplacian result without scale
+imgg = scale255(imgg); % this is the image to show
+imgcross = scale255(imgcross);
+
+end
+\end{lstlisting}
+
+\lstset{language=Matlab}
+\begin{lstlisting}
+function [ imgg, imgt ] = canny( imgf, sigma, n, TL, TH )
+%CANNY canny's algorithm
+%   sigma - gaussian variance, n - size of filter, TH TL - thresholds
+
+% generate gaussian filter
+x = (1:n) - (n+1)/2;
+y = x';
+x = repmat(x, n, 1);
+y = repmat(y, 1, n);
+D2 = x.^2 + y.^2;
+gau_filter = exp(-D2 / (2*sigma*sigma));
+
+% preprocess
+[M, N] = size(imgf);
+imgf = double(imgf) ./ 255;
+f = replicate_padding(imgf, n-1);
+f = double(f); % double f
+
+% gaussian smoothing
+g = zeros(M+2*n, N+2*n);
+for x = (n : M+n-1)
+    for y = (n : N+n-1)
+        xlow = fix(x - fix((n-1)/2));
+        xhigh = fix(x + fix((n-1)/2));
+        ylow = fix(y - fix((n-1)/2));
+        yhigh = fix(y + fix((n-1)/2));
+        g(x,y) = sum(sum(f(xlow:xhigh,ylow:yhigh) .* gau_filter));
+    end
+end
+
+% restore to original size
+f = g(n:M+n-1, n:N+n-1);
+minf = min(min(f));
+maxf = max(max(f));
+f = (f - minf)./(maxf-minf); % normalization to (0,1)
+
+% calculate magnitude and angle image
+magnitude = zeros(M, N);
+angle = zeros(M, N);
+for x = (1:M-1)
+    for y = (1:N-1)
+        py = f(x,y) - f(x,y+1) + f(x+1,y) - f(x+1,y+1);
+        px = f(x,y) - f(x+1,y) + f(x,y+1) - f(x+1,y+1);
+        magnitude(x, y) = sqrt(px*px + py*py);
+        angle(x, y) = atand(py/px);
+    end
+end
+
+% obtain thresholding-only image
+imgt = zeros(M, N);
+for x = (1:M)
+    for y = (1:N)
+        if magnitude(x,y)>=TL 
+            imgt(x,y) = magnitude(x,y);
+        end
+    end
+end
+imgt = uint8(scale255(imgt));
+
+% nonmaximum suppression
+suppres = zeros(M, N);
+
+for x = (2:M-1)
+    for y = (2:N-1)
+        if angle(x,y)>=-22.5 && angle(x,y)<22.5 % horizontal
+            if magnitude(x,y)>magnitude(x-1,y) && magnitude(x,y)>magnitude(x+1,y)
+                suppres(x, y) = magnitude(x,y);
+            end
+        elseif angle(x,y)>=22.5 && angle(x,y)<67.5 % leftbottom-righttop
+            if magnitude(x,y)>magnitude(x-1,y-1) && magnitude(x,y)>magnitude(x+1,y+1)
+                suppres(x, y) = magnitude(x,y);
+            end
+        elseif angle(x,y)>=-67.5 && angle(x,y)<-22.5 % lefttop-rightbottom
+            if magnitude(x,y)>magnitude(x-1,y+1) && magnitude(x,y)>magnitude(x+1,y-1)
+                suppres(x, y) = magnitude(x,y);
+            end
+        else % vertical
+            if magnitude(x,y)>magnitude(x,y+1) && magnitude(x,y)>magnitude(x,y-1)
+                suppres(x, y) = magnitude(x,y);
+            end
+        end
+    end
+end
+
+% double thresholding
+imgg = zeros(M, N);
+
+for x = (1:M)
+    for y = (1:N)
+        if suppres(x,y)>TH % strong edge pixel
+            imgg(x,y) = 1;
+        elseif suppres(x,y)>TL 
+            if max(max(suppres(x-1:x+1,y-1:y+1)))>TH % 8-connectivity
+                imgg(x,y) = 1;
+            end
+        end            
+    end
+end
+
+end
+\end{lstlisting}
+
+\lstset{language=Matlab}
+\begin{lstlisting}
+function [ imgg, T ] = basic_global_thresholding( imgf, T0, deltaT )
+%BASIC_GLOBAL_THRESHOLDING 
+%   T0: init esitimatation threshold, deltaT: the stopping difference
+
+while 1
+    [~, mean_0, mean_1] = thresholding(imgf, T0);
+    T1 = (mean_0+mean_1)/2;
+    if abs(T1-T0) <= deltaT
+        T = T1;
+        break
+    end
+    T0 = T1;
+end
+[imgg, ~, ~] = thresholding(imgf, T);
+
+end
+
+function [ imgg, mean_0, mean_1 ] = thresholding( imgf, T )    
+[M, N] = size(imgf);
+imgg = zeros(M, N);
+mean_0 = double(0);
+mean_1 = double(0);
+cnt_0 = 0;
+cnt_1 = 0;
+for x = (1:M)
+    for y = (1:N)
+        if imgf(x,y)>T
+            imgg(x,y)=250;
+            mean_1 = mean_1+double(imgf(x,y));
+            cnt_1 = cnt_1+1;
+        else
+            imgg(x,y)=5;
+            mean_0 = mean_0+double(imgf(x,y));
+            cnt_0 = cnt_0+1;
+        end
+    end
+end
+
+imgg = uint8(imgg);
+if mean_0 == 0
+    cnt_0 = 1;
+end
+if mean_1 == 0
+    cnt_1 = 1;
+end
+
+mean_0 = mean_0 / cnt_0;
+mean_1 = mean_1 / cnt_1;
+
+end
+\end{lstlisting}
+
+\lstset{language=Matlab}
+\begin{lstlisting}
+function [ imgg, kstar, eta ] = otsu_thresholding( imgf )
+%OTSU_THRESHOLDING 
+%   kstar: threshold, eta: separability
+
+[M, N] = size(imgf);
+histf = zeros(1, uint32(256)); % (0:255)
+for x=(1:M)
+    for y=(1:N)
+        histf(fix(imgf(x,y)+1)) = histf(fix(imgf(x,y)+1)) + 1;
+    end
+end
+histf = double(histf)/double(M*N);
+
+P = zeros(1, uint32(256));
+P(1) = histf(1);
+for i = (2:256)
+    P(i) = P(i-1) + histf(i);
+end
+
+m = double(zeros(1, uint32(256)));
+m(1) = 0*double(histf(1));
+for i = (2:256)
+    m(i) = m(i-1) + double(i-1)*histf(i);
+end
+mG = m(256);
+
+size(P)
+size(m)
+size(mG)
+size(1-P)
+
+sigmaB2 = (mG .* P - m) .^2 ./(P .* (1-P));
+size(sigmaB2)
+kall = find(sigmaB2==max(sigmaB2));
+kstar = mean(kall) - 1;
+sigmaG = sum(((0:255)-mG).^2 .* histf);
+
+eta = sigmaB2(int32(kstar)) / sigmaG;
+imgg = thresholding(imgf, kstar);
+
+end
+
+function [ imgg ] = thresholding( imgf, T )    
+[M, N] = size(imgf);
+imgg = zeros(M, N);
+for x = (1:M)
+    for y = (1:N)
+        if imgf(x,y)>T
+            imgg(x,y)=250;
+        else
+            imgg(x,y)=5;
+        end
+    end
+end
+
+imgg = uint8(imgg);
+end
+\end{lstlisting}
+
