@@ -12,7 +12,7 @@ imgff(1:m, 1:n) = imgf;
 f = zeros(M, N);
 for x = (1:M)
     for y = (1:N)
-        if calc_overlap(imgff, x, y, grid_size)>0.2*grid_size^2
+        if calc_overlap(imgff, x, y, grid_size)>0.3*grid_size^2
             f(x,y) = 255;
         end
     end

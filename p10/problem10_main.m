@@ -34,15 +34,58 @@ imwrite(f_long_chain, '10_long_chain.png');
 %}
 
 % large grid outer boundary
-
+%{
 [f_large_grid, f_highlight_grid, chain_code, first_diff, f_straight_border] = border_following_resample(f_otsu, 50);
 figure, imshow(f_large_grid);
 figure, imshow(f_highlight_grid);
 figure, imshow(f_straight_border);
-%imwrite(f_large_grid, '10_large_grid.png');
-%imwrite(f_straight_border);
+imwrite(f_large_grid, '10_large_grid.png');
+imwrite(f_straight_border,'10_straight_border.png');
 chain_code
-%first_diff
+first_diff
+%}
+%=========================================================================
+% PART2 - Principle component analysis
 
+% readin images
+imgpath = './washingtonDC/';
+m = 564;
+n = 564;
+img_set = zeros(6, m*n);
+for i = (1:6)
+    imgf = imread([imgpath 'WashingtonDC_Band' num2str(i) '.tif']);
+    size(imgf)
+    imgf = reshape(imgf, m*n, 1); % reshape to col vector
+    img_set(i, :) = imgf;
+    imwrite(imgf, [imgpath 'WashingtonDC_Band' num2str(i) '.png']);
+end
+img_set = double(img_set);
 
+% use all components
+[eigenval_6, pc_6, ~] = pca(img_set, 6);
+for i = (1:6)
+    imgf = uint8(scale255(reshape(pc_6(i,:), m, n)));
+    figure, imshow(imgf);
+    imwrite(imgf, ['10_components_' num2str(i) '.png']);
+end
+eigenval_6
+%{
+eigenval_6 =
+
+   1.0e+04 *
+
+    1.0344
+    0.2966
+    0.1401
+    0.0203
+    0.0094
+    0.0031
+%}
+% use two components for reconstruction
+[~, ~, rec_2] = pca(img_set, 2);
+for i = (1:6)
+    imgf = uint8(scale255(reshape(rec_2(i,:), m, n)));
+    figure, imshow(imgf);
+    imwrite(imgf, ['10_reconstruct_' num2str(i) '.png']);
+end
 

@@ -1,0 +1,43 @@
+\section{Project 7 - Transform Image Compression}
+\subsection{Project Proposal}
+There are two parts in this project. Both parts use \emph{lenna.tif} as test image.\\
+\textbf{(a)} Investigate image compression based on DCT block transform coding on blocks of size 8x8. Compress the test image to different qualities by discarding some DCT coefficients based on zonal mask and threshold mask and using the inverse discrete cosine transform with fewer transform coefficients. Display the original, reconstructed and difference images. \\
+\textbf{(b)} Investigate image compression based on wavelets. Consider four types of wavelets: Haar, Daubechies, Symlet and the biorthogonal Cohen-Daubechies-Feauveau. The corresponding parameters is given in problem set. Decompose the test image by wavelets to 3 levels, truncate the wavelet coefficient to 0 below some threshold. Reconstruct the image from the left coefficients. Display the wavelet transforms of the image, the reconstructed image and the difference image.
+
+\subsection{Preliminaries}
+\subsubsection{Block Transform Coding}
+Block transform coding is a widely used technique appears in many compression standards (JPEG, M-JPEG, MPEG-1,2,4......). We divides an image into small non-overlapping blocks of equal size (e.g. $8\times 8$) and processes the blocks independently using a 2-D transform. A reversible linear transform is used to map each block into a set of transform coefficients, which are then quantized and coded. In this project, we use DCT as the transform function. The overview diagram of the block coding system is displayed in Fig.\ref{fig:blocksys}. 
+\begin{figure}[h!]
+	\centering	
+	\includegraphics[width=0.7\linewidth]{myfigure/p7/block_system.png}
+	\caption{Overview of block transform coding system with encoder and decoder.}
+	\label{fig:blocksys}
+\end{figure}
+A forward discrete transform $T(u,v)$ of an $n\times n$ block can be expressed as \begin{equation} T(u,v)=\sum_{x=0}^{n-1}\sum_{y=0}^{n-1}g(x,y)r(x,y,u,v) \end{equation} and given $T(u,v)$, $g(x,y)$ can be obtained with inverse transform \begin{equation} g(x,y)=\sum_{u=0}^{n-1}\sum_{v=0}^{n-1}T(u,v)s(x,y,u,v) \end{equation} In these two equations, $r(x,y,u,v)$ and $s(x,y,u,v)$ are called \emph{forward} and \emph{inverse transformation kernels} respectively. They are also referred to basis functions or basis images. The $T(u,v)$ are called \emph{transform coefficients}.
+\subsubsection{Discrete cosine transform (DCT)}
+DCT is one of most frequently used image compression kernel
+\begin{equation}\begin{aligned} r(x,y,u,v)&=s(x,y,u,v)\\ 
+&=\alpha(u)\alpha(v)\cos\left[ \frac{(2x+1)u\pi}{2n}\right] \cos\left[ \frac{(2y+1)v\pi}{2n} \right]
+\end{aligned}\end{equation} 
+\begin{equation} \alpha(u) = \left\{ \begin{array}{rcl}
+\sqrt{1/n} & \text{for } u=0 \\
+\sqrt{2/n} & \text{for } u=1,2,...,n-1
+\end{array} \right. \end{equation}
+\subsubsection{Bit allocation}
+Here we discuss two most popular methods for retained coefficients selection which is a masking function 
+\begin{equation}\chi(u,v)= \left\{ \begin{array}{rcl}
+0 & \text{if $T(u,v)$ satisfies a specified truncation criterion}\\
+1 & \text{otherwise}
+\end{array} \right. \end{equation}. One is based on maximum variance, called \emph{zonal coding} and the other is based on maximum magnitude called \emph{threshold coding}. The overall process of truncating, quantizing and coding the coefficients of transformed subimage is commonly called bit allocation. In Fig.\ref{fig:bitalloc} are typical forms of zonal mask and threshold mask. We construct zonal mask by placing a 1 in the locations of maximum variance and a 0 in all other locations. Coefficients of maximum variance usually are located around the origina of an image transform, resulting the typical zonal mask shown here. Threshold coding is adaptive in the sense that the location of the transform coefficients retained for each subimage vary from one subimage to another.\\
+\begin{figure}[h!]
+	\centering	
+	\includegraphics[width=0.7\linewidth]{myfigure/p7/bit_allocation.png}
+	\caption{A typical (a)zonal mask, (b)zonal bit allocation, (c)threshold mask and (d)thresholded coefficient ordering sequence.}
+	\label{fig:bitalloc}
+\end{figure}
+
+\subsubsection{}
+
+
+
+

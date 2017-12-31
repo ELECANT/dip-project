@@ -25,6 +25,7 @@ Here we mention three masks(Figure \ref{fig:3masks}) Roberts, Prewitt and Sobel 
 \textbf{The Marr-Hildreth edge detector} is able to compute the approximate numerical result of gradient operator for sharply focused detail as well as act at large scale to detect the blurry edges. This operator is defined as $\nabla^2 G$ where \begin{equation}G(x,y) = e^{-frac{x^2+y^2}{2\sigma^2}} \label{eq:gaussian_2}\end{equation}. Then the so-called \emph{Laplacian of Gaussian(LoG)} is \begin{equation} \nabla^2 G(x,y) = \left[ \frac{x^2+y^2-\sigma^2}{4\sigma^4} \right]e^{-\frac{x^2+y^2}{2\sigma^2}} \end{equation} The use of LoG filter can be represented as \begin{equation} g(x,y)=\nabla^2\left[G(x,y)\right]\circ f(x,y) \end{equation}. Because of linear process, we can also write it as \begin{equation} g(x,y)=\nabla^2\left[G(x,y)\circ f(x,y)\right] \end{equation} 
 Hence, the steps of Marr-Hildreth algorithm can be summarized as: \textbf{1.}Filter the input image with $n\times n$ Gaussian lowpass filter obtained by sampling \ref{eq:gaussian_2}. \textbf{2.}Compute the Laplacian of the result of step \textbf{1} using, for example, $3\times 3$ mask. \textbf{3.}Find the zero crossing of the resulting image from step 2. \\
 The method of finding zero crossing at any pixel $p$ is to use a $3\times 3$ neighborhood centered at $p$, if the absolute difference of any two opposite neighbors exceeds a given threshold, then $p$ is a zero-crossing pixel.\\
+\\
 \textbf{The Canny edge detector} is superior in general to all the detectors discussed before. The algorithm consist the following steps: \\
 \textbf{1.}Smooth the input image with a Gaussian filter.\\ 
 \textbf{2.}Compute the gradient magnitude $M(x,y)$ and angle $\alpha(x,y)$ images. \\
@@ -45,6 +46,7 @@ Thresholding is useful in applications of image segmentation because of its simp
 1 & \text{if}f(x,y)>T \\
 0 & \text{otherwise}  \end{array} \right.\label{eq:global_threshold}\end{equation}
 When $T$ is a constant applicable over an entire image, the process given in this equation is referred to as \textbf{global thresholding}. \\
+\\
 \textbf{Basic global thresholding} algorithm is capable of estimate automatically the threshold value for each image is required. The following iterative algorithm can be used for this purpose:\\
 \textbf{1.}Select an initial estimate for the global threshold $T$. Mean value of gray intensities is a good choice.\\
 \textbf{2.}Segment the image using $T$ in Eq.\ref{eq:global_threshold}. This will result in two groups of pixels: $G_1$($g(x,y)>T$) and $G_2$($g(x,y)\leq T$)\\
