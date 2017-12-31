@@ -36,8 +36,8 @@ simple `matlab` implementation of some digital image topics
 ## run the code   
 Every project is in a single directory, use matlab run the `problem?_main.m`  
 The result images will show in the window and also write into the files in the same directory.  
-*P.S. The `project 4` has two main: `problem4_main_part1.m`, `problem_main_part2.m` 
-*P.S. The `project 8` is very slow because the `hole filling` task cost about 30mins*   
+*P.S. The `project 4` has two main: `problem4_main_part1.m`, `problem_main_part2.m`*  
+*P.S. The `project 8` is very slow because the `hole filling` task cost about 30mins*     
 
 ## implementation    
 - What I didn't do   
